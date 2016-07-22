@@ -1,5 +1,6 @@
 CC=g++
-CFLAGS=-std=c++11 -Wall
+CFLAGS = -Wall -std=c++11 -g -c
+LFLAGS = -Wall -std=c++11 -g
 
 SRCS= main.cpp func.cpp
 
@@ -10,17 +11,18 @@ _OBJS= $(SRCS:.cpp=.o)
 OBJS= $(patsubst %,$(OBJDIR)/%,$(_OBJS))
 
 BINDIR=bin
-$(OBJDIR)/hellocpp11: $(OBJS)
-	mkdir -p bin
-	$(CC) $(OBJS) -o $(BINDIR)/hellocpp11 $(CFLAGS)
+$(OBJDIR)/hellocpp11: $(OBJS) | $(BINDIR)
+	$(CC) $(OBJS) -o $(BINDIR)/hellocpp11 $(LFLAGS)
 
 $(OBJS): | $(OBJDIR)
 $(OBJDIR):
 	mkdir $(OBJDIR)
 
+$(BINDIR):
+	mkdir -p bin
 
 $(OBJDIR)/%.o: %.cpp $(DEPS)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) $< -o $@
 
 .PHONY: clean
 
