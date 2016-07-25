@@ -2,30 +2,31 @@ CC=g++
 CFLAGS = -Wall -std=c++11 -g -c
 LFLAGS = -Wall -std=c++11 -g
 
-SRCS= main.cpp func.cpp
-
-DEPS= func.h
-
 OBJDIR=obj
-_OBJS= $(SRCS:.cpp=.o)
-OBJS= $(patsubst %,$(OBJDIR)/%,$(_OBJS))
-
+SRCDIR=src
 BINDIR=bin
-$(OBJDIR)/hellocpp11: $(OBJS) | $(BINDIR)
+
+SRCS = $(wildcard $(SRCDIR)/*.cpp)
+OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
+
+all: $(BINDIR)/hellocpp11
+
+$(BINDIR)/hellocpp11: $(OBJS) | dirs
 	$(CC) $(OBJS) -o $(BINDIR)/hellocpp11 $(LFLAGS)
 
-$(OBJS): | $(OBJDIR)
-$(OBJDIR):
-	mkdir $(OBJDIR)
-
-$(BINDIR):
-	mkdir -p bin
-
-$(OBJDIR)/%.o: %.cpp $(DEPS)
+$(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | dirs
 	$(CC) $(CFLAGS) $< -o $@
+	$(CC) -MM -MF $(OBJDIR)/$*.d $<
 
-.PHONY: clean
+-include $(OBJDIR)/*.d
+
+.PHONY: clean build
+
+dirs:
+	mkdir -p $(OBJDIR)
+	mkdir -p $(BINDIR)
 
 clean:
 	rm -f $(OBJDIR)/*.o
 	rm -rf $(BINDIR)/*.*
+
