@@ -11,18 +11,18 @@ OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
 
 all: $(BINDIR)/hellocpp11
 
-$(BINDIR)/hellocpp11: $(OBJS) | dirs
+$(BINDIR)/hellocpp11: $(OBJS) | mkdirs
 	$(CC) $(OBJS) -o $(BINDIR)/hellocpp11 $(LFLAGS)
 
-$(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | dirs
+$(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | mkdirs
 	$(CC) $(CFLAGS) $< -o $@
 	$(CC) -MM -MF $(OBJDIR)/$*.d $<
 
 -include $(OBJDIR)/*.d
 
-.PHONY: clean build
+.PHONY: mkdirs clean
 
-dirs:
+mkdirs:
 	mkdir -p $(OBJDIR)
 	mkdir -p $(BINDIR)
 
