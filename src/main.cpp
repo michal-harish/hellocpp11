@@ -2,20 +2,15 @@
 #error C++ compiler required.
 #endif
 
-#if __cplusplus > 199711L
-#ifndef HAS_MOVE_SEMANTICS
-#error compiler lies - its at least C++11 but not support move semantics 
-#endif
-#else
+#if __cplusplus < 201103L
 #error at least C++11 compiler required
 #endif 
 
 #include <iostream>
 #include <vector>
-
 #include <librdkafka/rdkafkacpp.h>
-
 #include "func.h"
+#include "config.h"
 
 using namespace std;
 
