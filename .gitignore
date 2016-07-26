@@ -13,6 +13,7 @@ config.sub
 configure
 aux-dist
 config.h
+configure
 Makefile
 Makefile.in
 .deps
