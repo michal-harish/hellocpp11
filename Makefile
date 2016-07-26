@@ -5,9 +5,10 @@ CFLAGS = $(pkg-config --libs --cflags $(LIBS)) -Wall -std=c++11 -g -c
 LFLAGS = $(pkg-config --libs --cflags $(LIBS)) -Wall -std=c++11 -g \
 	-Wl,-rpath=/usr/local/lib
 
-OBJDIR=obj
+
 SRCDIR=src
 BINDIR=bin
+OBJDIR=$(BINDIR)/$(SRCDIR)
 
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
@@ -27,9 +28,7 @@ $(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | mkdirs
 
 mkdirs:
 	mkdir -p $(OBJDIR)
-	mkdir -p $(BINDIR)
 
 clean:
-	rm -f $(OBJDIR)/*.o
-	rm -rf $(BINDIR)/*.*
+	rm -rf $(BINDIR)
 
