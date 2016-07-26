@@ -16,4 +16,5 @@ config.h
 configure
 Makefile
 Makefile.in
+.dirstamp
 .deps

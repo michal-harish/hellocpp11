@@ -1,2 +1,2 @@
 bin_PROGRAMS=hellocpp1
-hellocpp1_SOURCES=main.cpp func.cpp
+hellocpp1_SOURCES=src/main.cpp src/func.cpp
