@@ -3,8 +3,6 @@ LIBS=-lrdkafka++
  
 CFLAGS = $(pkg-config --libs --cflags $(LIBS)) -Wall -std=c++11 -g -c 
 LFLAGS = $(pkg-config --libs --cflags $(LIBS)) -Wall -std=c++11 -g \
-	-Wl,-rpath=/usr/local/lib
-
 
 SRCDIR=src
 BINDIR=bin
